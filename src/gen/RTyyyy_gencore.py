@@ -121,7 +121,7 @@ class secBootRTyyyyGen(RTyyyy_uicore.secBootRTyyyyUi):
         self.destAppIvtOffset = None
         self.destAppInitialLoadSize = 0
         self.minAppInitialLoadSize = 0
-        self.destAppVectorAddress = 0
+        #self.destAppVectorAddress = 0
         self.destAppVectorOffset = None
         self.destAppBinaryBytes = 0
         self.destAppCsfAddress = None
@@ -1376,7 +1376,7 @@ class secBootRTyyyyGen(RTyyyy_uicore.secBootRTyyyyUi):
             finalBtAppData += edgelockFwBytes
         ##############################################################
         num = self.destAppVectorOffset - self.destAppInitialLoadSize
-        #self.printDeviceStatus("tgt.flexspiNorMemBase  = " + str(hex(self.tgt.flexspiNorMemBase)))
+        #self.printDeviceStatus("GEN tgt.flexspiNorMemBase  = " + str(hex(self.tgt.flexspiNorMemBase)))
         #self.printDeviceStatus("destAppContainerOffset  = " + str(hex(self.destAppContainerOffset)))
         #self.printDeviceStatus("destAppVectorOffset  = " + str(hex(self.destAppVectorOffset)))
         #self.printDeviceStatus("destAppInitialLoadSize  = " + str(hex(self.destAppInitialLoadSize)))

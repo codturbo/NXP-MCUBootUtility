@@ -46,7 +46,7 @@ build = 'Release'
 availablePeripherals = 0x11
 romTargetVersion = rundef.kRomTargetVersionT100
 romUsbVid = '0x1FC9'
-romUsbPid = '0x0025'
+romUsbPid = '0x0026'
 hasSdpReadRegisterCmd = None
 bootHeaderType = gendef.kBootHeaderType_Vector
 flashloaderUsbVid = '0x15A2'
@@ -57,7 +57,7 @@ availableCommands = 0x5EFDF
 supportedPeripheralSpeed_uart = [4800, 9600, 19200, 57600, 115200] # @todo Verify
 availableSecureBootTypes = [RTxxx_uidef.kSecureBootType_PlainUnsigned]
 hasRemappedFuse = None
-availableBootDevices = [RTxxx_uidef.kBootDevice_XspiNor]
+availableBootDevices = [RTxxx_uidef.kBootDevice_XspiNor, RTxxx_uidef.kBootDevice_LpFlexcommSpiNor]
 flexspiNorDevice = uidef.kFlexspiNorDevice_MXIC_MX25UM51345G
 flexspiNorMemBase0   = 0x28000000 # CM33 Non-Secure
 flexspiNorMemBase0Ns = None
@@ -102,10 +102,11 @@ registerDefnDict  = None
 
 efusemapIndexDict = None
 efusemapDefnDict  = None
+isResetNeededForEfuseRefresh = None
 efuseDescDiffDict = None
 
 otpmapIndexDict = RTxxx_uidef_otp.otpmapIndexDict_RT700
-otpmapDefnDict  = RTxxx_uidef_otp.otpmapDefnDict_RTxxx
+otpmapDefnDict  = RTxxx_uidef_otp.otpmapDefnDict_RT700
 otpDescDiffDict = None
 
 ftfxNorMemBase = None

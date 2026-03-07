@@ -10,11 +10,13 @@ kBootDevice_XspiNor        = 'XSPI NOR'
 kBootDevice_UsdhcSd        = 'uSDHC SD'
 kBootDevice_UsdhcMmc       = 'uSDHC (e)MMC'
 kBootDevice_FlexcommSpiNor = 'FLEXCOMM SPI NOR'
+kBootDevice_LpFlexcommSpiNor = 'LP-FLEXCOMM SPI NOR'
 
 kBootDevice_v2_0_0 = [kBootDevice_FlexspiNor]
-kBootDevice_v2_2_0 = [kBootDevice_FlexspiNor, kBootDevice_FlexcommSpiNor]
+kBootDevice_v2_2_0 = [kBootDevice_FlexspiNor,                                            kBootDevice_FlexcommSpiNor]
 kBootDevice_v3_5_0 = [kBootDevice_FlexspiNor, kBootDevice_UsdhcSd, kBootDevice_UsdhcMmc, kBootDevice_FlexcommSpiNor]
-kBootDevice_Latest = kBootDevice_v3_5_0
+kBootDevice_v6_5_0 = [kBootDevice_FlexspiNor, kBootDevice_UsdhcSd, kBootDevice_UsdhcMmc, kBootDevice_FlexcommSpiNor, kBootDevice_LpFlexcommSpiNor]
+kBootDevice_Latest = kBootDevice_v6_5_0
 
 kSecureBootType_PlainUnsigned        = 'Plain Unsigned Image Boot'
 kSecureBootType_PlainSigned          = 'Plain Signed Image Boot'

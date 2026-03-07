@@ -108,6 +108,8 @@ registerDefnDict  = RTyyyy_rundef.registerDefnDict_RT10yy
 efusemapIndexDict = RTyyyy_uidef_efuse.efusemapIndexDict_RT10yy
 efusemapDefnDict  = RTyyyy_uidef_efuse.efusemapDefnDict_RT10yy
 
+isResetNeededForEfuseRefresh = False
+
 efuse_0x450_bit7_4   = {'Boot_Device_Selection':   ['0000 - FlexSPI NOR',
                                                     '0001 - Reserved',
                                                     '0010 - Reserved',

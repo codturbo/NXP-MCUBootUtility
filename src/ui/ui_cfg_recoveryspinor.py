@@ -41,9 +41,23 @@ class secBootUiCfgRecoverySpiNor(bootDeviceWin_RecoverySpiNor.bootDeviceWin_Reco
         # bit [07:04] Sector size (Bytes), 0-4K, 1-8K, 2-32K, 3-64K,
         #             4-128K, 5-256K
         # bit [03:00] Page size (Bytes) 0-256, 1-512
+        #######################################################
+        #1. Prepare LP-Flexcomm SPI NOR option block
+        # bit [31:28] tag, fixed to 0x0c
+        # bit [27:24] Size, (bytes/4) - 1
+        # bit [23:20] SPI instance (0-13)
+        # bit [19:16] PCS index (0-3)
+        # bit [15:12] Flash type, 0-NOR, parameters specified
+        #                         2-NOR, parameters auto detected
+        # bit [11:08] Flash size(Bytes) 0 - 512K, 1-1M, 2-2M, 3-4M, 4-8M
+        #             13-64K, 14-128K, 15-256K, etc.
+        # bit [07:04] Sector size (Bytes), 0-4K, 1-8K, 2-32K, 3-64K,
+        #             4-128K, 5-256K
+        # bit [03:00] Page size (Bytes) 0-256, 1-512
         self.recoverySpiNorOpt0 = None
         self.recoverySpiNorOpt1 = None
         self.mcuSeries = None
+        self.mcuDevice = None
 
     def _setLanguage( self ):
         runtimeSettings = uivar.getRuntimeSettings()
@@ -60,8 +74,9 @@ class secBootUiCfgRecoverySpiNor(bootDeviceWin_RecoverySpiNor.bootDeviceWin_Reco
         self.m_button_ok.SetLabel(uilang.kSubLanguageContentDict['button_lpspinor_ok'][langIndex])
         self.m_button_cancel.SetLabel(uilang.kSubLanguageContentDict['button_lpspinor_cancel'][langIndex])
 
-    def setNecessaryInfo( self, mcuSeries ):
+    def setNecessaryInfo( self, mcuSeries, mcuDevice ):
         self.mcuSeries = mcuSeries
+        self.mcuDevice = mcuDevice
         if self.mcuSeries in uidef.kMcuSeries_iMXRTyyyy:
             lpspiNorOpt0, lpspiNorOpt1 = uivar.getBootDeviceConfiguration(RTyyyy_uidef.kBootDevice_LpspiNor)
             self.recoverySpiNorOpt0 = lpspiNorOpt0
@@ -74,10 +89,16 @@ class secBootUiCfgRecoverySpiNor(bootDeviceWin_RecoverySpiNor.bootDeviceWin_Reco
             flexcommSpiNorOpt0, flexcommSpiNorOpt1 = uivar.getBootDeviceConfiguration(RTxxx_uidef.kBootDevice_FlexcommSpiNor)
             self.recoverySpiNorOpt0 = flexcommSpiNorOpt0
             self.recoverySpiNorOpt1 = flexcommSpiNorOpt1
-            deviceType = ['1bit NOR Flash',
-                          'SFDP NOR Flash']
-            spiIndex = ['0', '1', '2', '3', '4', '5', '6', '7']
-            spiSpeed = ['24MHz']
+            if self.mcuDevice == uidef.kMcuDevice_iMXRT700:
+                deviceType = ['NOR, parameters specified',
+                              'NOR, parameters auto detected']
+                spiIndex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
+                spiSpeed = ['20MHz', '10MHz', '5MHz', '2MHz']
+            else:
+                deviceType = ['1bit NOR Flash',
+                              'SFDP NOR Flash']
+                spiIndex = ['0', '1', '2', '3', '4', '5', '6', '7']
+                spiSpeed = ['24MHz']
         else:
             pass
         self.m_choice_deviceType.Clear()
@@ -128,11 +149,11 @@ class secBootUiCfgRecoverySpiNor(bootDeviceWin_RecoverySpiNor.bootDeviceWin_Reco
 
     def _getDeviceType( self ):
         txt = self.m_choice_deviceType.GetString(self.m_choice_deviceType.GetSelection())
-        if txt == '1bit NOR Flash':
+        if txt == '1bit NOR Flash' or txt == 'NOR, parameters specified':
             val = 0x0
         elif txt == 'EEPROM':
             val = 0x1
-        elif txt == 'SFDP NOR Flash':
+        elif txt == 'SFDP NOR Flash' or txt == 'NOR, parameters auto detected':
             val = 0x2
         else:
             pass
@@ -190,6 +211,10 @@ class secBootUiCfgRecoverySpiNor(bootDeviceWin_RecoverySpiNor.bootDeviceWin_Reco
         else:
             pass
         self.recoverySpiNorOpt1 = (self.recoverySpiNorOpt1 & 0xFFFFFFF0) | (val << 0)
+        if txt == '24MHz':
+            self.recoverySpiNorOpt0 = self.recoverySpiNorOpt0 & 0xF0FFFFFF
+        else:
+            self.recoverySpiNorOpt0 = self.recoverySpiNorOpt0 | 0x01000000
 
     def callbackOk(self, event):
         self._getDeviceType()

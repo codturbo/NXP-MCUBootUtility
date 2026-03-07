@@ -107,6 +107,7 @@ class Target(object):
         self.registerDefnDict = misc.get_dict_default(kwargs, 'registerDefnDict', None)
         self.efusemapIndexDict = misc.get_dict_default(kwargs, 'efusemapIndexDict', None)
         self.efusemapDefnDict = misc.get_dict_default(kwargs, 'efusemapDefnDict', None)
+        self.isResetNeededForEfuseRefresh = misc.get_dict_default(kwargs, 'isResetNeededForEfuseRefresh', None)
         self.efuseDescDiffDict = misc.get_dict_default(kwargs, 'efuseDescDiffDict', None)
         self.otpmapIndexDict = misc.get_dict_default(kwargs, 'otpmapIndexDict', None)
         self.otpmapDefnDict = misc.get_dict_default(kwargs, 'otpmapDefnDict', None)

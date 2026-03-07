@@ -1834,7 +1834,7 @@ class secBootWin ( wx.Frame ):
 		wSizer_logView.Add( self.m_staticText_null0LogView, 0, wx.ALL, 5 )
 
 		self.m_textCtrl_bootLogContext = wx.TextCtrl( self.m_panel_logView, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 740,325 ), wx.TE_MULTILINE|wx.TE_RICH2 )
-		self.m_textCtrl_bootLogContext.SetFont( wx.Font( 10, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+		self.m_textCtrl_bootLogContext.SetFont( wx.Font( 10, wx.FONTFAMILY_MODERN, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
 		self.m_textCtrl_bootLogContext.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
 
 		wSizer_logView.Add( self.m_textCtrl_bootLogContext, 0, wx.ALL, 5 )

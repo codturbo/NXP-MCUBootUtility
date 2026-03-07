@@ -113,6 +113,8 @@ registerDefnDict  = RTyyyy_rundef.registerDefnDict_RT11yy
 efusemapIndexDict = RTyyyy_uidef_efuse.efusemapIndexDict_RT11yy
 efusemapDefnDict  = RTyyyy_uidef_efuse.efusemapDefnDict_RT11yy
 
+isResetNeededForEfuseRefresh = False
+
 efuseDescDiffDict = {
                      '0xc70_flexramcfg_bit21_16':RTyyyy_uidef_efuse.efuse_0xc70_flexramPartion512KB,
                     }

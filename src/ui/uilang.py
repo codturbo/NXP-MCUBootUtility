@@ -974,6 +974,22 @@ kRevision_6_4_0_zh = u"【v6.4.0】 - 2025.03\n" + \
                      u"     1. [RTxxx] 支持i.MXRT700 B0\n" + \
                      u"  改进: \n" + \
                      u"     1. 通用编程器窗口显示等宽字符显示 \n\n"
+kRevision_6_5_0_en =  "【v6.5.0】 - 2026.03\n" + \
+                      "  Feature: \n" + \
+                      "     1. [RT700] Support LP-Flexcomm SPI NOR recovery boot device\n" + \
+                      "  Improvement: \n" + \
+                      "     1. [RT1180] A software reset is needed after fuse programming \n" + \
+                      "  Bugfix: \n" + \
+                      "     1. [RT1180] Fix non-secure addr CM33 image support for FlexSPI NOR device. \n" + \
+                      "     2. [RT700 B0] FDCB is imcomplete after all-in-one action if keep FDCB option is enabled. \n\n"
+kRevision_6_5_0_zh = u"【v6.5.0】 - 2026.03\n" + \
+                     u"  特性: \n" + \
+                     u"     1. [RT700] 支持LP-Flexcomm SPI接口NOR Flash设备\n" + \
+                     u"  改进: \n" + \
+                     u"     1. [RT1180] 烧写完efuse后需要复位才能回读生效 \n" + \
+                     u"  修复: \n" + \
+                     u"     1. [RT1180] 修复对CM33非安全地址链接的FlexSPI NOR XIP程序支持 \n" + \
+                     u"     2. [RT700 B0] 当Keep FDCB选项使能的时候，一键下载后FDCB不完整 \n\n"
 
 kMsgLanguageContentDict = {
         'homePage_title':                     ['Home Page',                             u"项目主页"],
@@ -984,9 +1000,9 @@ kMsgLanguageContentDict = {
         'aboutAuthor_email2':                 ['Email:     hengjie1989@foxmail.com \n', u"邮箱：hengjie1989@foxmail.com \n"],
         'aboutAuthor_blog':                   [u"Blog:      痞子衡嵌入式 https://www.cnblogs.com/henjay724/ \n",                   u"博客：痞子衡嵌入式 https://www.cnblogs.com/henjay724/ \n"],
         'contributors_title':                 ['Contributors',                          u"贡献者名单"],
-        'contributors_info':                  [u"李嘉奕Joyeee、祁凯Kelvin、范全有James \n",                                        u"李嘉奕Joyeee、祁凯Kelvin、范全有James \n"],
+        'contributors_info':                  [u"李嘉奕、祁凯、范全有 \n",                 u"李嘉奕、祁凯、范全有 \n"],
         'specialThanks_title':                ['Special Thanks',                        u"特别感谢"],
-        'specialThanks_info':                 [u"Special thanks to 周小朋Clare、杨帆、刘华东Howard、沈浩杰Jayson \n",              u"特别感谢我亲爱的同事们：周小朋Clare、杨帆、刘华东Howard、沈浩杰Jayson \n"],
+        'specialThanks_info':                 [u"Special thanks to 周小朋、杨帆、刘华东、沈浩杰 \n",                                   u"特别感谢我亲爱的同事们：周小朋、杨帆、刘华东、沈浩杰 \n"],
         'revisionHistory_title':              ['Revision History',                      u"版本历史"],
         'revisionHistory_v1_0_0':             [kRevision_1_0_0_en,                      kRevision_1_0_0_zh],
         'revisionHistory_v1_1_0':             [kRevision_1_1_0_en,                      kRevision_1_1_0_zh],
@@ -1022,6 +1038,7 @@ kMsgLanguageContentDict = {
         'revisionHistory_v6_2_0':             [kRevision_6_2_0_en,                      kRevision_6_2_0_zh],
         'revisionHistory_v6_3_0':             [kRevision_6_3_0_en,                      kRevision_6_3_0_zh],
         'revisionHistory_v6_4_0':             [kRevision_6_4_0_en,                      kRevision_6_4_0_zh],
+        'revisionHistory_v6_5_0':             [kRevision_6_5_0_en,                      kRevision_6_5_0_zh],
 
         'bootDeviceInfo_hasOnchipSerialNor':  ['MCU has on-chip QSPI NOR Flash (4MB, 133MHz), so you don\'t need to configure this boot device!',
                                               u"微控制器内置4MB的QSPI NOR Flash，所以无需配置该启动设备！"],
@@ -1175,6 +1192,8 @@ kMsgLanguageContentDict = {
 
         'burnFuseError_failToBurnDualImageMiscConf':  ['Fuse 0x6E0/0xC80[24:12] region was not burned successfully!',
                                                       u"Fuse 0x6E0/0xC80[24:12]区域未成功烧录！"],
+        'burnFuseQuestion_forceReset':  ['A software reset is needed after fuse programming! Do you want to reset now?',
+                                        u"烧录完efuse后需要复位才能正确回读！你想现在做软复位吗？"],
 
         'operImgError_hasnotProgImage':       ['You should program your image first!',
                                               u"请首先下载image文件！"],
@@ -1188,6 +1207,15 @@ kMsgLanguageContentDict = {
                                                 u"Otp BOOT_CFG0[19:17]已经被烧录，它只可被烧写一次！"],
         'burnOtpError_failToBurnBootCfg0':   ['Otp BOOT_CFG0[19:17] REDUNDANT_SPI_PORT region was not burned successfully!',
                                               u"Otp BOOT_CFG0[19:17]区域未成功烧录！"],
+
+        'burnOtpError_bootCfg0_5HasBeenBurned': ['Otp BOOT_CFG0[19:17]/BOOT_CFG5[19:16] REDUNDANT_SPI_PORT has been burned, it is program-once!',
+                                                u"Otp BOOT_CFG0[19:17]/BOOT_CFG5[19:16]已经被烧录，它只可被烧写一次！"],
+        'burnOtpError_failToBurnBootCfg0_5':   ['Otp BOOT_CFG0[19:17]/BOOT_CFG5[19:16] REDUNDANT_SPI_PORT region was not burned successfully!',
+                                               u"Otp BOOT_CFG0[19:17]/BOOT_CFG5[19:16]区域未成功烧录！"],
+        'burnOtpError_bootCfg1HasBeenBurned': ['Otp BOOT_CFG1[3] REC_BOOT_EN has been burned, it is program-once!',
+                                              u"Otp BOOT_CFG1[3]已经被烧录，它只可被烧写一次！"],
+        'burnOtpError_failToBurnBootCfg1':   ['Otp BOOT_CFG1[3] REC_BOOT_EN region was not burned successfully!',
+                                             u"Otp BOOT_CFG1[3]区域未成功烧录！"],
 
         'connectError_doubleCheckFopt':       ['Make sure that you have put MCU in ROM boot mode (FOPT(FCF - 0x40d) = 0x3D, BOOTCFG0(NMI) pin is asserted)!',
                                               u"请检查FOPT(FCF区域0x40d)是否为0x3D以及上电时BOOTCFG0有没有按住以确认微控制器处于ROM启动模式！"],

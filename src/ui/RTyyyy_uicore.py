@@ -29,6 +29,7 @@ class secBootRTyyyyUi(btlogcore.secBootLog):
         self.isNandDevice = False
         self.isSdmmcCard = False
         self.imgLayoutPicPathStr = None
+        self.destAppVectorAddress = 0
         self._RTyyyy_initTargetSetupValue()
         self.RTyyyy_setTargetSetupValue()
 
@@ -50,9 +51,8 @@ class secBootRTyyyyUi(btlogcore.secBootLog):
     def _RTyyyy_initTargetSetupValue( self ):
         self.m_choice_bootDevice.Clear()
         self.m_choice_bootDevice.SetItems(RTyyyy_uidef.kBootDevice_Latest)
-        totalSel = self.m_choice_bootDevice.GetCount()
-        if self.toolCommDict['bootDevice'] < totalSel:
-            self.m_choice_bootDevice.SetSelection(self.toolCommDict['bootDevice'])
+        if self.toolCommDict['bootDevice'] in self.m_choice_bootDevice.GetStrings():
+            self.m_choice_bootDevice.SetSelection(self.m_choice_bootDevice.FindString(self.toolCommDict['bootDevice']))
         else:
             self.m_choice_bootDevice.SetSelection(0)
 
@@ -62,7 +62,7 @@ class secBootRTyyyyUi(btlogcore.secBootLog):
         self.RTyyyy_createMcuTarget()
         self.refreshBootDeviceList()
         self.bootDevice = self.m_choice_bootDevice.GetString(self.m_choice_bootDevice.GetSelection())
-        self.toolCommDict['bootDevice'] = self.m_choice_bootDevice.GetSelection()
+        self.toolCommDict['bootDevice'] = self.bootDevice
         if self.bootDevice == RTyyyy_uidef.kBootDevice_FlexspiNor:
             self.isXipableDevice = True
             self.isNandDevice = False

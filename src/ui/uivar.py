@@ -268,7 +268,7 @@ def initVar(cfgFilename):
                           'secBootType':0,
                           'mcuSeries':0,
                           'mcuDevice':0,
-                          'bootDevice':0,
+                          'bootDevice':None,
                           'isUsbhidPortSelected':True,
                           'isOneStepChecked':True,
                           'certSerial':'12345678',
@@ -470,7 +470,8 @@ def getBootDeviceConfiguration( group ):
         global g_lpspiNorOpt0
         global g_lpspiNorOpt1
         return g_lpspiNorOpt0, g_lpspiNorOpt1
-    elif group == RTxxx_uidef.kBootDevice_FlexcommSpiNor:
+    elif group == RTxxx_uidef.kBootDevice_FlexcommSpiNor or \
+         group == RTxxx_uidef.kBootDevice_LpFlexcommSpiNor:
         global g_flexcommSpiNorOpt0
         global g_flexcommSpiNorOpt1
         return g_flexcommSpiNorOpt0, g_flexcommSpiNorOpt1
@@ -539,7 +540,8 @@ def setBootDeviceConfiguration( group, *args ):
         global g_lpspiNorOpt1
         g_lpspiNorOpt0 = args[0]
         g_lpspiNorOpt1 = args[1]
-    elif group == RTxxx_uidef.kBootDevice_FlexcommSpiNor:
+    elif group == RTxxx_uidef.kBootDevice_FlexcommSpiNor or \
+         group == RTxxx_uidef.kBootDevice_LpFlexcommSpiNor:
         global g_flexcommSpiNorOpt0
         global g_flexcommSpiNorOpt1
         g_flexcommSpiNorOpt0 = args[0]

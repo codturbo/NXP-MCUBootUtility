@@ -33,9 +33,8 @@ class secBootLpcUi(RTxxx_main.secBootRTxxxMain):
     def _LPC_initTargetSetupValue( self ):
         self.m_choice_bootDevice.Clear()
         self.m_choice_bootDevice.SetItems(LPC_uidef.kBootDevice_Latest)
-        totalSel = self.m_choice_bootDevice.GetCount()
-        if self.toolCommDict['bootDevice'] < totalSel:
-            self.m_choice_bootDevice.SetSelection(self.toolCommDict['bootDevice'])
+        if self.toolCommDict['bootDevice'] in self.m_choice_bootDevice.GetStrings():
+            self.m_choice_bootDevice.SetSelection(self.m_choice_bootDevice.FindString(self.toolCommDict['bootDevice']))
         else:
             self.m_choice_bootDevice.SetSelection(0)
         if self.toolCommDict['appFilename'] != None:
@@ -50,7 +49,7 @@ class secBootLpcUi(RTxxx_main.secBootRTxxxMain):
         self.LPC_createMcuTarget()
         self.refreshBootDeviceList()
         self.bootDevice = self.m_choice_bootDevice.GetString(self.m_choice_bootDevice.GetSelection())
-        self.toolCommDict['bootDevice'] = self.m_choice_bootDevice.GetSelection()
+        self.toolCommDict['bootDevice'] = self.bootDevice
 
     def _LPC_initSecureBootSeqValue( self ):
         if not self.initSecureBootTypeList():

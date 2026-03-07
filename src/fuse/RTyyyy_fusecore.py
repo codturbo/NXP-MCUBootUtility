@@ -167,30 +167,40 @@ class secBootRTyyyyFuse(RTyyyy_runcore.secBootRTyyyyRun):
             self._burnFuseLockRegion(lockOperDict['kEfuseIndex_LOCK'][0], lockOperDict['kEfuseIndex_LOCK'][1], 'kEfuseIndex_LOCK')
         if lockOperDict['kEfuseIndex_LOCK2'] !=None:
             self._burnFuseLockRegion(lockOperDict['kEfuseIndex_LOCK2'][0], lockOperDict['kEfuseIndex_LOCK2'][1], 'kEfuseIndex_LOCK2')
-        self.RTyyyy_scanAllFuseRegions(True, True)
+        if self.tgt.isResetNeededForEfuseRefresh:
+            if self.wantToForceReset():
+                self.connectStage = uidef.kConnectStage_Reset
+                self.RTyyyy_connectStateMachine(False)
+            else:
+                self.RTyyyy_scanAllFuseRegions(True, True)
+        else:
+            self.RTyyyy_scanAllFuseRegions(True, True)
 
     def RTyyyy_task_doShowSettedEfuse( self ):
         while True:
-            if self.mcuSeries == uidef.kMcuSeries_iMXRT10yy:
-                efuseDict = uivar.getEfuseSettings()
-                if efuseDict['0x400_lock'] != self.toBeBurnnedFuseList[0]:
-                    self.toBeBurnnedFuseList[0] = efuseDict['0x400_lock']
-                    self.showSettedEfuse(self.tgt.efusemapIndexDict['kEfuseIndex_LOCK'], efuseDict['0x400_lock'])
-                if efuseDict['0x450_bootCfg0'] != self.toBeBurnnedFuseList[5]:
-                    self.toBeBurnnedFuseList[5] = efuseDict['0x450_bootCfg0']
-                    self.showSettedEfuse(self.tgt.efusemapIndexDict['kEfuseIndex_BOOT_CFG0'], efuseDict['0x450_bootCfg0'])
-                if efuseDict['0x460_bootCfg1'] != self.toBeBurnnedFuseList[6]:
-                    self.toBeBurnnedFuseList[6] = efuseDict['0x460_bootCfg1']
-                    self.showSettedEfuse(self.tgt.efusemapIndexDict['kEfuseIndex_BOOT_CFG1'], efuseDict['0x460_bootCfg1'])
-                if efuseDict['0x470_bootCfg2'] != self.toBeBurnnedFuseList[7]:
-                    self.toBeBurnnedFuseList[7] = efuseDict['0x470_bootCfg2']
-                    self.showSettedEfuse(self.tgt.efusemapIndexDict['kEfuseIndex_BOOT_CFG2'], efuseDict['0x470_bootCfg2'])
-                if efuseDict['0x6d0_miscConf0'] != self.toBeBurnnedFuseList[45]:
-                    self.toBeBurnnedFuseList[45] = efuseDict['0x6d0_miscConf0']
-                    self.showSettedEfuse(self.tgt.efusemapIndexDict['kEfuseIndex_MISC_CONF0'], efuseDict['0x6d0_miscConf0'])
-                if efuseDict['0x6e0_miscConf1'] != self.toBeBurnnedFuseList[46]:
-                    self.toBeBurnnedFuseList[46] = efuseDict['0x6e0_miscConf1']
-                    self.showSettedEfuse(self.tgt.efusemapIndexDict['kEfuseIndex_MISC_CONF1'], efuseDict['0x6e0_miscConf1'])
+            try:
+                if self.mcuSeries == uidef.kMcuSeries_iMXRT10yy:
+                    efuseDict = uivar.getEfuseSettings()
+                    if efuseDict['0x400_lock'] != self.toBeBurnnedFuseList[0]:
+                        self.toBeBurnnedFuseList[0] = efuseDict['0x400_lock']
+                        self.showSettedEfuse(self.tgt.efusemapIndexDict['kEfuseIndex_LOCK'], efuseDict['0x400_lock'])
+                    if efuseDict['0x450_bootCfg0'] != self.toBeBurnnedFuseList[5]:
+                        self.toBeBurnnedFuseList[5] = efuseDict['0x450_bootCfg0']
+                        self.showSettedEfuse(self.tgt.efusemapIndexDict['kEfuseIndex_BOOT_CFG0'], efuseDict['0x450_bootCfg0'])
+                    if efuseDict['0x460_bootCfg1'] != self.toBeBurnnedFuseList[6]:
+                        self.toBeBurnnedFuseList[6] = efuseDict['0x460_bootCfg1']
+                        self.showSettedEfuse(self.tgt.efusemapIndexDict['kEfuseIndex_BOOT_CFG1'], efuseDict['0x460_bootCfg1'])
+                    if efuseDict['0x470_bootCfg2'] != self.toBeBurnnedFuseList[7]:
+                        self.toBeBurnnedFuseList[7] = efuseDict['0x470_bootCfg2']
+                        self.showSettedEfuse(self.tgt.efusemapIndexDict['kEfuseIndex_BOOT_CFG2'], efuseDict['0x470_bootCfg2'])
+                    if efuseDict['0x6d0_miscConf0'] != self.toBeBurnnedFuseList[45]:
+                        self.toBeBurnnedFuseList[45] = efuseDict['0x6d0_miscConf0']
+                        self.showSettedEfuse(self.tgt.efusemapIndexDict['kEfuseIndex_MISC_CONF0'], efuseDict['0x6d0_miscConf0'])
+                    if efuseDict['0x6e0_miscConf1'] != self.toBeBurnnedFuseList[46]:
+                        self.toBeBurnnedFuseList[46] = efuseDict['0x6e0_miscConf1']
+                        self.showSettedEfuse(self.tgt.efusemapIndexDict['kEfuseIndex_MISC_CONF1'], efuseDict['0x6e0_miscConf1'])
+            except:
+                pass
             time.sleep(0.5)
 
     def saveFuseRegions( self ):

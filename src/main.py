@@ -176,13 +176,15 @@ class secBootMain(MCX_main.secBootMcxMain):
             usdhcMmcFrame.setNecessaryInfo(self.tgt.hasMultiUsdhcBootInstance)
             usdhcMmcFrame.Show(True)
         elif self.bootDevice == RTyyyy_uidef.kBootDevice_LpspiNor or \
-             self.bootDevice == RTxxx_uidef.kBootDevice_FlexcommSpiNor:
+             self.bootDevice == RTxxx_uidef.kBootDevice_FlexcommSpiNor or \
+             self.bootDevice == RTxxx_uidef.kBootDevice_LpFlexcommSpiNor:
             recoverySpiNorFrame = ui_cfg_recoveryspinor.secBootUiCfgRecoverySpiNor(None)
-            if self.bootDevice == RTxxx_uidef.kBootDevice_FlexcommSpiNor:
+            if self.bootDevice == RTxxx_uidef.kBootDevice_FlexcommSpiNor or \
+               self.bootDevice == RTxxx_uidef.kBootDevice_LpFlexcommSpiNor:
                 recoverySpiNorFrame.SetTitle(uilang.kSubLanguageContentDict['flexcommspinor_title'][self.languageIndex])
             else:
                 recoverySpiNorFrame.SetTitle(uilang.kSubLanguageContentDict['lpspinor_title'][self.languageIndex])
-            recoverySpiNorFrame.setNecessaryInfo(self.mcuSeries)
+            recoverySpiNorFrame.setNecessaryInfo(self.mcuSeries, self.mcuDevice)
             recoverySpiNorFrame.Show(True)
         else:
             pass
@@ -751,14 +753,15 @@ class secBootMain(MCX_main.secBootMcxMain):
                    (uilang.kMsgLanguageContentDict['revisionHistory_v6_1_0'][self.languageIndex]) +
                    (uilang.kMsgLanguageContentDict['revisionHistory_v6_2_0'][self.languageIndex]) +
                    (uilang.kMsgLanguageContentDict['revisionHistory_v6_3_0'][self.languageIndex]) +
-                   (uilang.kMsgLanguageContentDict['revisionHistory_v6_4_0'][self.languageIndex]))
+                   (uilang.kMsgLanguageContentDict['revisionHistory_v6_4_0'][self.languageIndex]) +
+                   (uilang.kMsgLanguageContentDict['revisionHistory_v6_5_0'][self.languageIndex]))
         wx.MessageBox(msgText, uilang.kMsgLanguageContentDict['revisionHistory_title'][self.languageIndex], wx.OK | wx.ICON_INFORMATION)
 
 if __name__ == '__main__':
     app = wx.App()
 
     g_main_win = secBootMain(None)
-    g_main_win.SetTitle(u"NXP MCU Boot Utility v6.4.0")
+    g_main_win.SetTitle(u"NXP MCU Boot Utility v6.5.0")
     g_main_win.Show()
 
     g_task_detectUsbhid = threading.Thread(target=g_main_win.task_doDetectUsbhid)

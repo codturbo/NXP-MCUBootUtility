@@ -23,6 +23,7 @@ class secBootRTxxxUi(RTyyyy_main.secBootRTyyyyMain):
         self.isXipableDevice = False
         self.isNandDevice = False
         self.isSdmmcCard = False
+        self.destAppVectorAddress = 0
         self._RTxxx_initTargetSetupValue()
         self.RTxxx_setTargetSetupValue()
 
@@ -36,9 +37,8 @@ class secBootRTxxxUi(RTyyyy_main.secBootRTyyyyMain):
     def _RTxxx_initTargetSetupValue( self ):
         self.m_choice_bootDevice.Clear()
         self.m_choice_bootDevice.SetItems(RTxxx_uidef.kBootDevice_Latest)
-        totalSel = self.m_choice_bootDevice.GetCount()
-        if self.toolCommDict['bootDevice'] < totalSel:
-            self.m_choice_bootDevice.SetSelection(self.toolCommDict['bootDevice'])
+        if self.toolCommDict['bootDevice'] in self.m_choice_bootDevice.GetStrings():
+            self.m_choice_bootDevice.SetSelection(self.m_choice_bootDevice.FindString(self.toolCommDict['bootDevice']))
         else:
             self.m_choice_bootDevice.SetSelection(0)
 
@@ -48,7 +48,7 @@ class secBootRTxxxUi(RTyyyy_main.secBootRTyyyyMain):
         self.RTxxx_createMcuTarget()
         self.refreshBootDeviceList()
         self.bootDevice = self.m_choice_bootDevice.GetString(self.m_choice_bootDevice.GetSelection())
-        self.toolCommDict['bootDevice'] = self.m_choice_bootDevice.GetSelection()
+        self.toolCommDict['bootDevice'] = self.bootDevice
         if self.bootDevice == RTxxx_uidef.kBootDevice_FlexspiNor:
             self.isXipableDevice = True
             self.isNandDevice = False
@@ -63,7 +63,8 @@ class secBootRTxxxUi(RTyyyy_main.secBootRTyyyyMain):
             self.sbEnableBootDeviceMagic = '@0xb'
             self.sbAccessBootDeviceMagic = ''
             self.setFlexspiNorDeviceForEvkBoard()
-        elif self.bootDevice == RTxxx_uidef.kBootDevice_FlexcommSpiNor:
+        elif self.bootDevice == RTxxx_uidef.kBootDevice_FlexcommSpiNor or \
+             self.bootDevice == RTxxx_uidef.kBootDevice_LpFlexcommSpiNor:
             self.isXipableDevice = False
             self.isNandDevice = False
             self.isSdmmcCard = False

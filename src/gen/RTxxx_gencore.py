@@ -43,7 +43,7 @@ class secBootRTxxxGen(RTxxx_uicore.secBootRTxxxUi):
         self.isFdcbFromSrcApp = False
 
         self.destAppInitialLoadSize = 0
-        self.destAppVectorAddress = 0
+        #self.destAppVectorAddress = 0
         self.destAppVectorOffset = None
         self.destAppBinaryBytes = 0
         self.isXipApp = False
@@ -416,7 +416,8 @@ class secBootRTxxxGen(RTxxx_uicore.secBootRTxxxUi):
                     destSbAppName += '_' + self.convertLongIntHexText(str(hex(flexspiNorOpt0))) + '_' + self.convertLongIntHexText(str(hex(flexspiNorOpt1)))
                 else:
                     destSbAppName += '_' + flexspiNorDeviceModel
-            elif self.bootDevice == RTxxx_uidef.kBootDevice_FlexcommSpiNor:
+            elif self.bootDevice == RTxxx_uidef.kBootDevice_FlexcommSpiNor or \
+                 self.bootDevice == RTxxx_uidef.kBootDevice_LpFlexcommSpiNor:
                 flexcommSpiNorOpt0, flexcommSpiNorOpt1 = uivar.getBootDeviceConfiguration(self.bootDevice)
                 destSbAppName += '_' + self.convertLongIntHexText(str(hex(flexcommSpiNorOpt0))) + '_' + self.convertLongIntHexText(str(hex(flexcommSpiNorOpt1)))
             elif self.bootDevice == RTxxx_uidef.kBootDevice_UsdhcSd:
@@ -453,7 +454,8 @@ class secBootRTxxxGen(RTxxx_uicore.secBootRTxxxUi):
             if self.bootDevice == RTxxx_uidef.kBootDevice_FlexspiNor or \
                self.bootDevice == RTxxx_uidef.kBootDevice_XspiNor:
                 destAppFilename = self.destAppFilename
-            elif self.bootDevice == RTxxx_uidef.kBootDevice_FlexcommSpiNor:
+            elif self.bootDevice == RTxxx_uidef.kBootDevice_FlexcommSpiNor or \
+                 self.bootDevice == RTxxx_uidef.kBootDevice_LpFlexcommSpiNor:
                 pass
             elif self.bootDevice == RTxxx_uidef.kBootDevice_UsdhcSd or \
                  self.bootDevice == RTxxx_uidef.kBootDevice_UsdhcMmc:

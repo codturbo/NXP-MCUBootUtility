@@ -106,6 +106,8 @@ registerDefnDict  = RTyyyy_rundef.registerDefnDict_RT10yy
 efusemapIndexDict = RTyyyy_uidef_efuse.efusemapIndexDict_RT10yy
 efusemapDefnDict  = RTyyyy_uidef_efuse.efusemapDefnDict_RT10yy
 
+isResetNeededForEfuseRefresh = False
+
 efuse_0x400_bit14    = {'SRK':                     ['0 - Unlock', '1 - W,0,RP']}
 efuse_0x400_bit15    = {'OTPMK_MSB':               ['0 - Unlock', '1 - W,0,RP']}
 efuse_0x450_bit3_2   = {'Hold_Time':               ['00 - 500us', '01 - 1ms', '10 - 3ms', '11 - 10ms']}

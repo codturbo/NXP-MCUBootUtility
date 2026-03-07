@@ -106,6 +106,8 @@ registerDefnDict  = RTyyyy_rundef.registerDefnDict_RT10yy
 efusemapIndexDict = RTyyyy_uidef_efuse.efusemapIndexDict_RT10yy
 efusemapDefnDict  = RTyyyy_uidef_efuse.efusemapDefnDict_RT10yy
 
+isResetNeededForEfuseRefresh = False
+
 efuse_0x400_bit7     = {'GP4_R':                   ['0 - Unlock', '1 - RP']}
 efuse_0x400_bit15    = {'ROM_PATCH':               ['0 - Unlock', '1 - W,0P']}
 efuse_0x400_bit17    = {'OTPMK':                   ['0 - Unlock', '1 - W,0,RP']}

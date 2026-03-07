@@ -119,15 +119,18 @@ class secBootRTyyyyRun(RTyyyy_gencore.secBootRTyyyyGen):
 
     def RTyyyy_createMcuTarget( self ):
         self.tgt, self.cpuDir = RTyyyy_createTarget(self.mcuDevice, self.exeBinRoot)
+        if self.bootDevice == RTyyyy_uidef.kBootDevice_FlexspiNor:
+            self.adjustTgtFlexspiMemBaseAccordingToApp(self.destAppVectorAddress)
 
     def RTyyyy_updateFlexspiNorMemBase( self ):
         # Set main flexspi nor XIP region
-        if self.flexspiBootInstance == 0:
-            self.tgt.flexspiNorMemBase = self.tgt.flexspiNorMemBase0
-        elif self.flexspiBootInstance == 1:
-            self.tgt.flexspiNorMemBase = self.tgt.flexspiNorMemBase1
-        else:
-            pass
+        if not self.adjustTgtFlexspiMemBaseAccordingToApp(self.destAppVectorAddress):
+            if self.flexspiBootInstance == 0:
+                self.tgt.flexspiNorMemBase = self.tgt.flexspiNorMemBase0
+            elif self.flexspiBootInstance == 1:
+                self.tgt.flexspiNorMemBase = self.tgt.flexspiNorMemBase1
+            else:
+                pass
 
     def RTyyyy_getUsbid( self ):
         self.RTyyyy_createMcuTarget()
@@ -339,6 +342,7 @@ class secBootRTyyyyRun(RTyyyy_gencore.secBootRTyyyyGen):
                 if self.tgt.bootHeaderType == gendef.kBootHeaderType_IVT:
                     flBinFile = os.path.join(self.cpuDir, 'ivt_flashloader.bin')
                 elif self.tgt.bootHeaderType == gendef.kBootHeaderType_Container:
+                    #self.printDeviceStatus("RUN tgt.flexspiNorMemBase  = " + str(hex(self.tgt.flexspiNorMemBase)))
                     if (self.tgt.flexspiNorMemBase >> 28) % 2:
                         flBinFile = os.path.join(self.cpuDir, 'cntr_flashloader_s.bin')
                     else:

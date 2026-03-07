@@ -99,6 +99,7 @@ registerDefnDict  = None
 
 efusemapIndexDict = None
 efusemapDefnDict  = None
+isResetNeededForEfuseRefresh = None
 efuseDescDiffDict = None
 
 otpmapIndexDict = None

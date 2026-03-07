@@ -131,7 +131,7 @@ class secBootRTyyyyMain(RTyyyy_memcore.secBootRTyyyyMem):
         self.setPortSetupValue(self.connectStage, usbIdList, False, False)
         self.isBootableAppAllowedToView = False
 
-    def _RTyyyy_connectStateMachine( self, showError=True ):
+    def RTyyyy_connectStateMachine( self, showError=True ):
         connectSteps = RTyyyy_uidef.kConnectStep_Normal
         self.getOneStepConnectMode()
         retryToDetectUsb = False
@@ -147,6 +147,7 @@ class secBootRTyyyyMain(RTyyyy_memcore.secBootRTyyyyMem):
             else:
                 pass
         while connectSteps:
+            #self.printDeviceStatus('connectStage = '+str(self.connectStage))
             if not self.updatePortSetupValue(retryToDetectUsb, showError):
                 if self.connectStage == uidef.kConnectStage_Rom:
                     if showError:
@@ -224,7 +225,7 @@ class secBootRTyyyyMain(RTyyyy_memcore.secBootRTyyyyMem):
         self._RTyyyy_startGaugeTimer()
         self.printLog("'Connect to xxx' button is clicked")
         if not self.isSbFileEnabledToGen:
-            self._RTyyyy_connectStateMachine(True)
+            self.RTyyyy_connectStateMachine(True)
         else:
             if not self.isThereBoardConnection:
                 if self.connectStage == uidef.kConnectStage_Rom:
@@ -232,7 +233,7 @@ class secBootRTyyyyMain(RTyyyy_memcore.secBootRTyyyyMem):
                 else:
                     # It means there is board connection
                     self.isThereBoardConnection = True
-                self._RTyyyy_connectStateMachine(False)
+                self.RTyyyy_connectStateMachine(False)
                 if not self.isThereBoardConnection:
                     if self.connectStage == uidef.kConnectStage_Rom:
                         # It means there is no board connection, but we need to set it as True for SB generation
@@ -295,9 +296,9 @@ class secBootRTyyyyMain(RTyyyy_memcore.secBootRTyyyyMem):
                            self.mcuDeviceHabStatus != RTyyyy_fusedef.kHabStatus_Closed1:
                            if not self.isSbFileEnabledToGen:
                                 self.enableHab()
-                                self._RTyyyy_connectStateMachine()
+                                self.RTyyyy_connectStateMachine()
                                 while self.connectStage != uidef.kConnectStage_Reset:
-                                    self._RTyyyy_connectStateMachine()
+                                    self.RTyyyy_connectStateMachine()
                                 directReuseCert = True
                                 allInOneSeqCnt += 1
                 else:
@@ -362,6 +363,12 @@ class secBootRTyyyyMain(RTyyyy_memcore.secBootRTyyyyMem):
             else:
                 certAnswer = wx.YES
         return (certAnswer == wx.YES)
+
+    def wantToForceReset( self):
+        rstAnswer = wx.NO
+        msgText = ((uilang.kMsgLanguageContentDict['burnFuseQuestion_forceReset'][self.languageIndex]))
+        rstAnswer = wx.MessageBox(msgText, "Force Reset Question", wx.YES_NO | wx.ICON_QUESTION)
+        return (rstAnswer == wx.YES)
 
     def _doGenCert( self, directReuseCert=False ):
         status = False
@@ -620,9 +627,9 @@ class secBootRTyyyyMain(RTyyyy_memcore.secBootRTyyyyMem):
                    self.mcuDeviceHabStatus != RTyyyy_fusedef.kHabStatus_Closed1:
                     if not self.isSbFileEnabledToGen:
                         self.enableHab()
-                        self._RTyyyy_connectStateMachine()
+                        self.RTyyyy_connectStateMachine()
                         while self.connectStage != uidef.kConnectStage_Reset:
-                            self._RTyyyy_connectStateMachine()
+                            self.RTyyyy_connectStateMachine()
                 self.flashHabDekToGenerateKeyBlob()
                 self.isBootableAppAllowedToView = True
                 status = True

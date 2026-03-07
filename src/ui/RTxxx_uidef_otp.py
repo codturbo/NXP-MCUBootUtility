@@ -39,8 +39,13 @@ otpmapIndexDict_RT700    = {'kOtpIndex_START' :0x0,
 
                             'kOtpIndex_BOOT_CFG0' :0x88,
                             'kOtpIndex_BOOT_CFG1' :0x89,
+                            'kOtpLocation_FlexcommSpiCfg2'    :0x89,
                             'kOtpIndex_BOOT_CFG2' :0x8a,
                             'kOtpIndex_BOOT_CFG3' :0x8b,
+                            'kOtpIndex_BOOT_CFG4' :0x8c,
+                            'kOtpIndex_BOOT_CFG5' :0x8d,
+                            'kOtpLocation_FlexcommSpiCfg'    :0x8d,
+                            'kOtpIndex_BOOT_CFG6' :0x8e,
 
                             'kOtpEntryModeRegion0IndexStart' :0x00,
                             'kOtpEntryModeRegion0IndexEnd'   :0x00,
@@ -54,3 +59,12 @@ otpmapIndexDict_RT700    = {'kOtpIndex_START' :0x0,
                             'kOtpEntryModeRegion4IndexEnd'   :0x00,
                             }
 
+
+otpmapDefnDict_RT700    = {
+                            'kOtpMask_RedundantSpiPort'            :0x000f0000,
+                            'kOtpShift_RedundantSpiPort'           :16,
+
+                            'kOtpMask_RedundantSpiEn'              :0x00000008,
+                            'kOtpShift_RedundantSpiEn'             :3,
+
+                            }

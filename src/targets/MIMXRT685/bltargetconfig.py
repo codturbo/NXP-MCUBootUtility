@@ -101,6 +101,7 @@ registerDefnDict  = None
 
 efusemapIndexDict = None
 efusemapDefnDict  = None
+isResetNeededForEfuseRefresh = None
 efuseDescDiffDict = None
 
 otpmapIndexDict = RTxxx_uidef_otp.otpmapIndexDict_RTxxx

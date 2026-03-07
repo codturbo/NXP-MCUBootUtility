@@ -73,7 +73,8 @@ class secBootRTxxxMem(RTxxx_otpcore.secBootRTxxxOtp):
         if self.bootDevice == RTxxx_uidef.kBootDevice_FlexspiNor or \
            self.bootDevice == RTxxx_uidef.kBootDevice_QuadspiNor or \
            self.bootDevice == RTxxx_uidef.kBootDevice_XspiNor or \
-           self.bootDevice == RTxxx_uidef.kBootDevice_FlexcommSpiNor:
+           self.bootDevice == RTxxx_uidef.kBootDevice_FlexcommSpiNor or \
+           self.bootDevice == RTxxx_uidef.kBootDevice_LpFlexcommSpiNor:
             imageMemBase = self.bootDeviceMemBase
         elif self.bootDevice == RTxxx_uidef.kBootDevice_UsdhcSd or \
              self.bootDevice == RTxxx_uidef.kBootDevice_UsdhcMmc:

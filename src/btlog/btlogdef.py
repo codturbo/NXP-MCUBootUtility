@@ -2,9 +2,9 @@ import sys, os
 
 #define MAKE_LOG_ENTRY(state, substate, status, entries) (((state) << 24) | ((substate) << 16) | ((status) << 8) | (entries))
 
-btlogIntro0 = '| Log Entry  |          State          |        Sub State        |          Status         |'
-btlogIntro1 = '| Log Entry  |          Description                                                        |'
-btlogIntro2 = '--------------------------------------------------------------------------------------------'
+btlogIntro0 = '| Log Entry  |          State         |        Sub State       |          Status        |'
+btlogIntro1 = '| Log Entry  |          Description                                                     |'
+btlogIntro2 = '-----------------------------------------------------------------------------------------'
 
 kBootLogStateType_HardwareInit  = 0x01
 kBootLogStateType_MasterBoot    = 0x05

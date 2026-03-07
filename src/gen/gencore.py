@@ -248,8 +248,16 @@ class secBootGen(uicore.secBootUi):
         flexspiNorOpt0, flexspiNorOpt1, flexspiDeviceModel, isFdcbKept, flexspiNorDualImageInfoList = uivar.getBootDeviceConfiguration(uidef.kBootDevice_XspiNor)
         self.isFdcbFromSrcApp = isFdcbKept
         if self.isFdcbFromSrcApp:
+            fdcbSize = memdef.kMemBlockSize_FDCB
+            if self.mcuDevice == uidef.kMcuDevice_iMXRT700:
+                if self.tgt.romTargetVersion == rundef.kRomTargetVersionT100:
+                    fdcbSize = memdef.kMemBlockSize_FDCB
+                elif self.tgt.romTargetVersion == rundef.kRomTargetVersionT200:
+                    fdcbSize = memdef.kMemBlockSize_NewFDCB
+                else:
+                    pass
             with open(self.fdcbBinFilename, 'wb') as fileObj:
-                fileObj.write(initialLoadAppBytes[fdcbOffset:fdcbOffset+memdef.kMemBlockSize_FDCB])
+                fileObj.write(initialLoadAppBytes[fdcbOffset:fdcbOffset+fdcbSize])
                 fileObj.close()
 
     def getImageVersionValueFromSrcApp(self, initialLoadAppBytes, fdcbOffset ):
@@ -291,22 +299,23 @@ class secBootGen(uicore.secBootUi):
             if ((imageStartAddr >= flexspiNorMemBase) and (imageStartAddr < flexspiNorMemBase + flexspiNorMemMaxSize)):
                 self.tgt.flexspiNorMemBase = flexspiNorMemBase
                 self.tgt.flexspiNorMemMaxSize = flexspiNorMemMaxSize
-                return
+                return True
         if flexspiNorMemBaseNs != None:
             if ((imageStartAddr >= flexspiNorMemBaseNs) and (imageStartAddr < flexspiNorMemBaseNs + flexspiNorMemMaxSize)):
                 self.tgt.flexspiNorMemBase = flexspiNorMemBaseNs
                 self.tgt.flexspiNorMemMaxSize = flexspiNorMemMaxSize
-                return
+                return True
         if flexspiNorMemBaseAliased != None:
             if ((imageStartAddr >= flexspiNorMemBaseAliased) and (imageStartAddr < flexspiNorMemBaseAliased + flexspiNorMemAliasedMaxSize)):
                 self.tgt.flexspiNorMemBase = flexspiNorMemBaseAliased
                 self.tgt.flexspiNorMemMaxSize = flexspiNorMemAliasedMaxSize
-                return
+                return True
         if flexspiNorMemBaseAliasedNs != None:
             if ((imageStartAddr >= flexspiNorMemBaseAliasedNs) and (imageStartAddr < flexspiNorMemBaseAliasedNs + flexspiNorMemAliasedMaxSize)):
                 self.tgt.flexspiNorMemBase = flexspiNorMemBaseAliasedNs
                 self.tgt.flexspiNorMemMaxSize = flexspiNorMemAliasedMaxSize
-                return
+                return True
+        return False
 
     def genPaddingByteArrayStr( self, num, pattern=0xFF ):
         paddingBytes = [pattern] * num
