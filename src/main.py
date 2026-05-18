@@ -754,14 +754,15 @@ class secBootMain(MCX_main.secBootMcxMain):
                    (uilang.kMsgLanguageContentDict['revisionHistory_v6_2_0'][self.languageIndex]) +
                    (uilang.kMsgLanguageContentDict['revisionHistory_v6_3_0'][self.languageIndex]) +
                    (uilang.kMsgLanguageContentDict['revisionHistory_v6_4_0'][self.languageIndex]) +
-                   (uilang.kMsgLanguageContentDict['revisionHistory_v6_5_0'][self.languageIndex]))
+                   (uilang.kMsgLanguageContentDict['revisionHistory_v6_5_0'][self.languageIndex]) +
+                   (uilang.kMsgLanguageContentDict['revisionHistory_v6_5_1'][self.languageIndex]))
         wx.MessageBox(msgText, uilang.kMsgLanguageContentDict['revisionHistory_title'][self.languageIndex], wx.OK | wx.ICON_INFORMATION)
 
 if __name__ == '__main__':
     app = wx.App()
 
     g_main_win = secBootMain(None)
-    g_main_win.SetTitle(u"NXP MCU Boot Utility v6.5.0")
+    g_main_win.SetTitle(u"NXP MCU Boot Utility v6.5.1")
     g_main_win.Show()
 
     g_task_detectUsbhid = threading.Thread(target=g_main_win.task_doDetectUsbhid)

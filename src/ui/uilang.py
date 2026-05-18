@@ -990,6 +990,11 @@ kRevision_6_5_0_zh = u"【v6.5.0】 - 2026.03\n" + \
                      u"  修复: \n" + \
                      u"     1. [RT1180] 修复对CM33非安全地址链接的FlexSPI NOR XIP程序支持 \n" + \
                      u"     2. [RT700 B0] 当Keep FDCB选项使能的时候，一键下载后FDCB不完整 \n\n"
+kRevision_6_5_1_en =  "【v6.5.1】 - 2026.05\n" + \
+                      "     1. [RT700] Fix OTP burning stable issue for recovery boot device. \n\n"
+kRevision_6_5_1_zh = u"【v6.5.1】 - 2026.05\n" + \
+                     u"  修复: \n" + \
+                     u"     1. [RT700] 修复对LP-Flexcomm SPI接口NOR启动相关OTP重复烧写稳定性问题 \n\n"
 
 kMsgLanguageContentDict = {
         'homePage_title':                     ['Home Page',                             u"项目主页"],
@@ -1039,6 +1044,7 @@ kMsgLanguageContentDict = {
         'revisionHistory_v6_3_0':             [kRevision_6_3_0_en,                      kRevision_6_3_0_zh],
         'revisionHistory_v6_4_0':             [kRevision_6_4_0_en,                      kRevision_6_4_0_zh],
         'revisionHistory_v6_5_0':             [kRevision_6_5_0_en,                      kRevision_6_5_0_zh],
+        'revisionHistory_v6_5_1':             [kRevision_6_5_1_en,                      kRevision_6_5_1_zh],
 
         'bootDeviceInfo_hasOnchipSerialNor':  ['MCU has on-chip QSPI NOR Flash (4MB, 133MHz), so you don\'t need to configure this boot device!',
                                               u"微控制器内置4MB的QSPI NOR Flash，所以无需配置该启动设备！"],

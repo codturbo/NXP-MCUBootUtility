@@ -589,14 +589,6 @@ class secBootRTxxxRun(RTxxx_gencore.secBootRTxxxGen):
             self.isConvertedAppUsed = False
         return True
 
-    def _getMcuDeviceFlexcommSpiCfg( self ):
-        flexcommSpi = self.RTxxx_readMcuDeviceOtpByBlhost(self.tgt.otpmapIndexDict['kOtpLocation_FlexcommSpiCfg'], '', False)
-        return flexcommSpi
-
-    def _getMcuDeviceFlexcommSpiCfg2( self ):
-        flexcommSpi = self.RTxxx_readMcuDeviceOtpByBlhost(self.tgt.otpmapIndexDict['kOtpLocation_FlexcommSpiCfg2'], '', False)
-        return flexcommSpi
-
     def _burnCommonMcuOtpBits( self, otpIndexStr, otpMaskStr, otpShiftStr, setOtpBits ):
             getOtpWord = self.RTxxx_readMcuDeviceOtpByBlhost(self.tgt.otpmapIndexDict[otpIndexStr], '', False)
             getOtpBits = (getOtpWord & self.tgt.otpmapDefnDict[otpMaskStr]) >> self.tgt.otpmapDefnDict[otpShiftStr]
@@ -625,40 +617,16 @@ class secBootRTxxxRun(RTxxx_gencore.secBootRTxxxGen):
                         return False
         elif self.bootDevice == RTxxx_uidef.kBootDevice_FlexcommSpiNor or \
              self.bootDevice == RTxxx_uidef.kBootDevice_LpFlexcommSpiNor:
-            setFlexcommSpiCfg = 0
             flexcommSpiNorOpt0, flexcommSpiNorOpt1 = uivar.getBootDeviceConfiguration(self.bootDevice)
             # Set Spi Index
             spiIndex = ((flexcommSpiNorOpt0 & 0x00F00000) >> 20)
-            setFlexcommSpiCfg = (setFlexcommSpiCfg & (~self.tgt.otpmapDefnDict['kOtpMask_RedundantSpiPort']) | (spiIndex << self.tgt.otpmapDefnDict['kOtpShift_RedundantSpiPort']))
-            getFlexcommSpiCfg = self._getMcuDeviceFlexcommSpiCfg()
-            if getFlexcommSpiCfg != None:
-                destFlexcommSpiCfg = setFlexcommSpiCfg | getFlexcommSpiCfg
-                if (destFlexcommSpiCfg & self.tgt.otpmapDefnDict['kOtpMask_RedundantSpiPort']) != setFlexcommSpiCfg:
-                    self.popupMsgBox(uilang.kMsgLanguageContentDict['burnOtpError_bootCfg0_5HasBeenBurned'][self.languageIndex])
+            if not self._burnCommonMcuOtpBits('kOtpLocation_FlexcommSpiCfg', 'kOtpMask_RedundantSpiPort', 'kOtpShift_RedundantSpiPort', spiIndex):
+                self.popupMsgBox(uilang.kMsgLanguageContentDict['burnOtpError_failToBurnBootCfg0_5'][self.languageIndex])
+                return False
+            if self.mcuDevice == uidef.kMcuDevice_iMXRT700:
+                if not self._burnCommonMcuOtpBits('kOtpLocation_FlexcommSpiCfg2', 'kOtpMask_RedundantSpiEn', 'kOtpShift_RedundantSpiEn', 1):
+                    self.popupMsgBox(uilang.kMsgLanguageContentDict['burnOtpError_failToBurnBootCfg1'][self.languageIndex])
                     return False
-                else:
-                    # We do ^ operation here, because only bit 1 in fuse word will take affect, bit 0 will be bypassed by OCOTP controller
-                    destFlexcommSpiCfg = destFlexcommSpiCfg ^ getFlexcommSpiCfg
-                    burnResult = self.RTxxx_burnMcuDeviceOtpByBlhost(self.tgt.otpmapIndexDict['kOtpLocation_FlexcommSpiCfg'], destFlexcommSpiCfg)
-                    if not burnResult:
-                        self.popupMsgBox(uilang.kMsgLanguageContentDict['burnOtpError_failToBurnBootCfg0_5'][self.languageIndex])
-                        return False
-                    if self.mcuDevice == uidef.kMcuDevice_iMXRT700:
-                        setFlexcommSpiCfg2 = 0
-                        setFlexcommSpiCfg2 = (setFlexcommSpiCfg2 & (~self.tgt.otpmapDefnDict['kOtpMask_RedundantSpiEn']) | (spiIndex << self.tgt.otpmapDefnDict['kOtpShift_RedundantSpiEn']))
-                        getFlexcommSpiCfg2 = self._getMcuDeviceFlexcommSpiCfg2()
-                        if getFlexcommSpiCfg2 != None:
-                            destFlexcommSpiCfg2 = setFlexcommSpiCfg2 | getFlexcommSpiCfg2
-                            if (destFlexcommSpiCfg2 & self.tgt.otpmapDefnDict['kOtpMask_RedundantSpiEn']) != setFlexcommSpiCfg2:
-                                self.popupMsgBox(uilang.kMsgLanguageContentDict['burnOtpError_bootCfg1HasBeenBurned'][self.languageIndex])
-                                return False
-                            else:
-                                # We do ^ operation here, because only bit 1 in fuse word will take affect, bit 0 will be bypassed by OCOTP controller
-                                destFlexcommSpiCfg2 = destFlexcommSpiCfg2 ^ getFlexcommSpiCfg2
-                                burnResult = self.RTxxx_burnMcuDeviceOtpByBlhost(self.tgt.otpmapIndexDict['kOtpLocation_FlexcommSpiCfg2'], destFlexcommSpiCfg2)
-                                if not burnResult:
-                                    self.popupMsgBox(uilang.kMsgLanguageContentDict['burnOtpError_failToBurnBootCfg1'][self.languageIndex])
-                                    return False
         elif self.bootDevice == RTxxx_uidef.kBootDevice_UsdhcSd:
             pass
         elif self.bootDevice == RTxxx_uidef.kBootDevice_UsdhcMmc:
